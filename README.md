@@ -6,47 +6,47 @@
 ---
 
 ## 📌 프로젝트 개요
-* [cite_start]**진행 기간:** 2026.01.05 ~ 2026.01.12 (약 1주) [cite: 28]
-* [cite_start]**핵심 목표:** * 단순 키워드 검색의 한계를 넘어선 **의미 기반 검색(Semantic Search)** 구현 [cite: 46, 47]
-    * [cite_start]RAG(Retrieval-Augmented Generation)를 통한 **할루시네이션(환각 현상) 최소화** [cite: 43, 44]
-    * [cite_start]텍스트와 도서 표지 이미지를 결합한 시각적 큐레이션 제공 [cite: 53, 54]
+* **진행 기간:** 2026.01.05 ~ 2026.01.12 (약 1주)
+* **핵심 목표:** * 단순 키워드 검색의 한계를 넘어선 **의미 기반 검색(Semantic Search)** 구현
+    * RAG(Retrieval-Augmented Generation)를 통한 **할루시네이션(환각 현상) 최소화**
+    * 텍스트와 도서 표지 이미지를 결합한 시각적 큐레이션 제공
 
 ## 🛠 기술 스택
-- [cite_start]**Language:** ![Python](https://img.shields.io/badge/python-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54) [cite: 30]
-- **Framework & Library:** - ![LangChain](https://img.shields.io/badge/LangChain-1C3C3C?style=for-the-badge&logo=langchain&logoColor=white)
-  - ![Streamlit](https://img.shields.io/badge/Streamlit-FF4B4B?style=for-the-badge&logo=Streamlit&logoColor=white)
-  - [cite_start]![Gradio](https://img.shields.io/badge/Gradio-FFBB00?style=for-the-badge&logo=Gradio&logoColor=white) [cite: 30]
-- [cite_start]**AI & Embedding:** - **LLM:** Groq [cite: 30]
-  - [cite_start]**Embedding:** `intfloat/multilingual-e5-small` (다국어 특화 모델) [cite: 108, 109, 111]
-- [cite_start]**Vector DB:** FAISS (Facebook AI Similarity Search) [cite: 30, 117]
+- **Language:** Python
+- **Framework & Library:** LangChain, Streamlit, Gradio
+- **AI & Embedding:** - **LLM:** Groq
+  - **Embedding:** intfloat/multilingual-e5-small (다국어 특화 모델)
+- **Vector DB:** FAISS (Facebook AI Similarity Search)
 
 ## ✨ 주요 기능
 ### 1. 지능형 도서 검색 및 추천 (RAG Chain)
-- [cite_start]**Retriever:** 사용자 질문을 벡터화하여 FAISS DB에서 유사도가 높은 도서 3권을 정밀 추출합니다. [cite: 121, 123, 124]
-- [cite_start]**System Prompting:** '전문 사서' 페르소나를 부여하여 추천 근거가 포함된 구조화된 답변을 생성합니다. [cite: 134, 135, 136]
+- **Retriever:** 사용자 질문을 벡터화하여 FAISS DB에서 유사도가 높은 도서 3권을 정밀 추출합니다.
+- **System Prompting:** '전문 사서' 페르소나를 부여하여 추천 근거가 포함된 구조화된 답변을 생성합니다.
 
 ### 2. 데이터 전처리 및 최적화
-- [cite_start]**통합 문맥 생성:** 도서명, 부제, 저자, 카테고리, 줄거리를 합쳐 LLM이 읽기 좋은 형태의 통합 문장(`context_for_embedding`)을 생성하여 검색 효율을 높였습니다. [cite: 98, 99, 100, 103]
-- [cite_start]**데이터 정제:** 1.5만 건의 데이터 중 결측치 및 중복 데이터를 제거하고, 설명이 너무 짧은 데이터를 필터링하여 품질을 확보했습니다. [cite: 69, 70, 74, 81]
+- **통합 문맥 생성:** 도서명, 부제, 저자, 카테고리, 줄거리를 합쳐 LLM이 읽기 좋은 형태의 통합 문장(context_for_embedding)을 생성하여 검색 효율을 높였습니다.
+- **데이터 정제:** 1.5만 건의 데이터 중 결측치 및 중복 데이터를 제거하고, 설명이 너무 짧은 데이터를 필터링하여 품질을 확보했습니다.
 
 ### 3. 멀티모달 UI 환경
-- [cite_start]**시각화:** 추천 결과와 함께 도서 썸네일(Thumbnail) 이미지를 매칭하여 가시성을 높였습니다. [cite: 54, 55, 175]
-- [cite_start]**실시간 스트리밍:** LLM의 응답을 실시간으로 출력하여 사용자 경험(UX)을 개선했습니다. [cite: 48, 49]
+- **시각화:** 추천 결과와 함께 도서 썸네일(Thumbnail) 이미지를 매칭하여 가시성을 높였습니다.
+- **실시간 스트리밍:** LLM의 응답을 실시간으로 출력하여 사용자 경험(UX)을 개선했습니다.
 
 ## 🏗 시스템 아키텍처 (RAG Process)
-1. [cite_start]**사용자 질문**: 사용자가 자연어로 도서 관련 질문 입력 [cite: 123]
-2. [cite_start]**벡터화**: 임베딩 모델을 통해 질문을 384차원 벡터로 변환 [cite: 113]
-3. [cite_start]**유사도 검색**: FAISS DB에서 L2 Distance 기반으로 최적의 도서 정보 추출 [cite: 120, 123]
-4. [cite_start]**답변 생성**: 추출된 정보와 대화 기록(Chat History)을 바탕으로 LLM이 최종 답변 생성 [cite: 126, 129, 130]
+
+
+1. **사용자 질문**: 사용자가 자연어로 도서 관련 질문 입력
+2. **벡터화**: 임베딩 모델을 통해 질문을 384차원 벡터로 변환
+3. **유사도 검색**: FAISS DB에서 L2 Distance 기반으로 최적의 도서 정보 추출
+4. **답변 생성**: 추출된 정보와 대화 기록(Chat History)을 바탕으로 LLM이 최종 답변 생성
 
 ## 🚀 문제 해결 사례
-- [cite_start]**TypeError 방어:** 대규모 데이터셋 내 결측치가 `float` 타입으로 변환되어 발생하는 에러를 방지하기 위해, 데이터 로드 단계에서 강력한 타입 캐스팅(`astype(str)`) 및 `fillna()` 처리를 적용하여 시스템 안정성을 확보했습니다. [cite: 145, 148, 150, 153]
+- **TypeError 방어:** 대규모 데이터셋 내 결측치가 float 타입으로 변환되어 발생하는 에러를 방지하기 위해, 데이터 로드 단계에서 강력한 타입 캐스팅(astype(str)) 및 fillna() 처리를 적용하여 시스템 안정성을 확보했습니다.
 
 ## 👥 프로젝트 성과 및 향후 계획
-- [cite_start]**성과:** 1.5만 권의 데이터셋에서 할루시네이션 없이 정확한 정보를 추출하는 실시간 시스템 구축 [cite: 12]
-- [cite_start]**향후 계획:** - 추천 정확도 개선을 위한 **Reranker** 도입 [cite: 12]
-    - [cite_start]표지 이미지를 통한 **멀티모달 검색** 기능 확장 [cite: 13]
-    - [cite_start]신규 도서 자동 반영을 위한 **증분 인덱싱 파이프라인** 구축 [cite: 12]
+- **성과:** 1.5만 권의 데이터셋에서 할루시네이션 없이 정확한 정보를 추출하는 실시간 시스템 구축
+- **향후 계획:** - 추천 정확도 개선을 위한 Reranker 도입
+    - 표지 이미지를 통한 멀티모달 검색 기능 확장
+    - 신규 도서 자동 반영을 위한 증분 인덱싱 파이프라인 구축
 
 ---
-[cite_start]**Author:** 이유진 ([leeyj011211@naver.com](mailto:leeyj011211@naver.com)) [cite: 16, 17]
+**Author:** 이유진 (leeyj011211@naver.com)
